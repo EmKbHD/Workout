@@ -1,24 +1,16 @@
 export const workoutType = `
+enum WorkoutStatusEnum{
+   IN_PROGRESS
+   CANCELED
+   COMPLETED
+ }
+
  type Workout {
    id: ID!
    title: String!
    reps: Int!
-   load: Int!
-   createdAt: String!
-   updatedAt: String!
-   user: USer!
- }
-
- type USer{
-   id: ID!
-   name: String!
-   email: String!
-   password: String!
-   content: String!
-   status: String!
-   createdAt: String!
-   updatedAt: String!
-   workouts: [Workout]
+   load: Float!
+   user: User!
  }
  
  type Query {
@@ -26,21 +18,27 @@ export const workoutType = `
    getWorkoutById(id: ID!): Workout
  }
 
- type Mutation {
-   createWorkout(input:createWorkoutInput): Workout
-   updateWorkout(input:updateWorkoutInput): Workout
-   deleteWorkout(id: ID!): Workout
- }
- 
  input createWorkoutInput {
    title: String!
    reps: Int!
-   load: Int!
+   load: Float!
+   userId: ID! 
  }
  
  input updateWorkoutInput {
    title: String
    reps: Int
-   load: Int
+   load: Float
  }
+
+ type Mutation {
+   createWorkout(input:createWorkoutInput!): Workout
+   updateWorkout(id:ID!, input:updateWorkoutInput!): Workout!
+   deleteWorkout(id: ID!): MessageResponse!
+ }
+ 
+ type MessageResponse {
+  message: String!
+ }
+
 `;
